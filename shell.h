@@ -24,8 +24,16 @@
 #define INT_CMD 2
 #define PATH_CMD 3
 
-
 #define min(x, y) (((x) < (y)) ? (x) : (y))
+
+#define TRUE 1
+#define FALSE 0
+
+/*Buffers*/
+
+#define MAX_INPUT_SIZE 1024
+#define MAX_ARGS 64
+
 
 /**
  *struct map - a struct that maps a command name to a function 
@@ -55,8 +63,10 @@ char **tokenize(char *, char *);
 void executeCommand(char **, int);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void ctrlCHandler(int);
+void change_directory(char *args[]);
 extern void initializeCommand(char **current_command, int type_command);
 extern void nonInteractiveMode(void);
+
 
 /*Strings*/
 char *_strtok_r(char *, char *, char **);
@@ -75,6 +85,8 @@ void _strcpy(char *, char *);
 /*Builtin*/
 void quit_function(char **);
 void env_function(char **);
+void set_env(char *args[]);
+void unset_env(char *args[]);
 
 #endif /*SHELL_H*/
 
