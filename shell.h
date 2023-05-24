@@ -69,33 +69,41 @@ extern char *shellName;
 extern int exitStatus;
 
 /*Utilities*/
-int parseCommand(char *);
 char *getEnvironmentVariable(char *);
 char *checkPath(char *);
-void (*getFunction(char *))(char **);
-char **tokenize(char *, char *);
-void executeCommand(char **, int);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void ctrlCHandler(int);
 void change_directory(const char *path);
 extern void initializeCommand(char **current_command, int type_command);
 extern void nonInteractiveMode(void);
+
+
+/* commandUtilities */
+int parseCommand(char *);
+void (*getFunction(char *))(char **);
+char **tokenize(char *, char *);
+void executeCommand(char **, int);
 void parse_command(char *command, char *args[]);
 
-
-/*Strings*/
-char *_strtok_r(char *, char *, char **);
-int _atoi(char *);
-void removeComment(char *);
+/* stringUtils */
 int _strcmp(char *, char *);
 char *_strcat(char *, char *);
+int _strlen(char *);
+void _strcpy(char *, char *);
+
+/* stringUtility */
 int _strspn(char *, char *);
 int _strcspn(char *, char *);
 char *_strchr(char *, char);
-void print(char *, int);
+
+/* stringFormat */
 void removeNewline(char *);
-int _strlen(char *);
-void _strcpy(char *, char *);
+void removeComment(char *);
+
+/* stringProcess */
+char *_strtok_r(char *, char *, char **);
+int _atoi(char *);
+void print(char *, int);
 
 /*Builtin*/
 void quit_function(char **);
