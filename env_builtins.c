@@ -10,8 +10,8 @@
 int set_env(const char *variable, const char *value)
 {
 	pid_t pid;
-	int var_len = strlen(variable);
-	int value_len = strlen(value);
+	int var_len = _strlen(variable);
+	int value_len = _strlen(value);
 	int com_len = 9 + var_len + value_len;
 	char *command = malloc(com_len + 1);
 
@@ -75,7 +75,7 @@ int set_env(const char *variable, const char *value)
 void unset_env(const char *variable)
 {
 	int i, res;
-	size_t com_len = strlen("unset_env") + strlen(variable + 1);
+	size_t com_len = _strlen("unset_env") + strlen(variable + 1);
 	char *command = malloc(com_len);
 
 	snprintf(command, com_len, "unset_env %s", variable);
@@ -83,8 +83,8 @@ void unset_env(const char *variable)
 	i = 0;
 	while (environ[i] != NULL)
 	{
-		if (strncmp(environ[i], variable, strlen(variable)) == 0
-		&& environ[i][strlen(variable)] == '=')
+		if (_strncmp(environ[i], variable, _strlen(variable)) == 0
+		&& environ[i][_strlen(variable)] == '=')
 		{
 			environ[i] = NULL;
 			break;
