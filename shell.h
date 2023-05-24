@@ -108,6 +108,8 @@ void print(char *, int);
 /*Builtin*/
 void quit_function(char **);
 void env_function(char **);
+
+/* env_builtin */
 int set_env(const char *variable, const char *value);
 void unset_env(const char *variable);
 
