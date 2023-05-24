@@ -80,7 +80,7 @@ void ctrlCHandler(int);
 void change_directory(const char *path);
 extern void initializeCommand(char **current_command, int type_command);
 extern void nonInteractiveMode(void);
-void parse_command(char *command, char *args[])
+void parse_command(char *command, char *args[]);
 
 
 /*Strings*/
