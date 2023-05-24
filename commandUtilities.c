@@ -9,7 +9,7 @@
 int parseCommand(char *command)
 {
 	int index;
-	char *internalCommands[] = {"env", "exit", NULL};
+	char *internalCommands[] = {"env", "exit","setenv", "unsetenv", "cd",  NULL};
 	char *commandPath = NULL;
 
 	for (index = 0; command[index] != '\0'; index++)
@@ -109,8 +109,8 @@ void (*getFunction(char *command))(char **)
 {
 	int index;
 	mapFunction mapping[] = {
-		{"env", env_function}, {"exit", quit_function}, {"setenv", set_env}, {"unsetenv", unset_env}};
-	for (index = 0; index < 4; index++)
+		{"env", env_function}, {"exit", quit_function}, {"setenv", set_env}, {"unsetenv", unset_env}, {"cd", change_directory};
+	for (index = 0; index < 5; index++)
 	{
 		if (_strcmp(command, mapping[index].commandName) == 0)
 			return (mapping[index].function);
