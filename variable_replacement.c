@@ -8,9 +8,8 @@
  */
 int replace_vars(char *command)
 {
-	int status;
+	int status = 0;
 	char *position;
-	char pid[10];
 
 	position = strstr(command, "$?");
 

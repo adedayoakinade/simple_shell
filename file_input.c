@@ -16,7 +16,12 @@ void file_command(char *command)
 	}
 	else if (pid == 0)
 	{
-		char *args[] = {"bin/sh", "-c", (char *)command, NULL};
+		char *args[MAX_ARGS];
+		
+		args[0] = "bin/sh";
+		args[1] = (char *)command;
+		args[3] = NULL;
+
 		execve("bin/sh", args, NULL);
 		perror("execve");
 		exit(EXIT_FAILURE);
