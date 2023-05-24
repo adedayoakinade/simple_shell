@@ -5,7 +5,7 @@
  *
  * Return: -1 if failure
  */
-int execute_command()
+int execute_command(void)
 {
 	int status;
 	pid_t pid = fork();
@@ -19,10 +19,12 @@ int execute_command()
 	if (pid == 0)
 	{
 		char *args[] = {"bin/sh", "-c", NULL};
+
 		execve("bin/sh", args, NULL);
 		exit(EXIT_FAILURE);
-	}	
-	else waitpid(pid, &status, 0);
+	}
+	else
+		waitpid(pid, &status, 0);
 
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
@@ -33,7 +35,8 @@ int execute_command()
 
 
 /**
- * logic_commands - executes logical commands
+ * logic_operation - executes logical commands
+ * @command: pointer to the command
  *
  * Return: -1
  */
@@ -58,11 +61,10 @@ int logic_operation(char *command)
 	{
 		if (res != 0)
 			res = execute_command(second_command);
-		
+
 	}
 	else if (strcmp(operation, "&&") == 0)
 	{
-	
 		if (res == 0)
 			res = execute_command(second_command);
 	}

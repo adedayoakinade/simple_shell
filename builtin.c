@@ -3,7 +3,7 @@
 
 /**
  * quit_function - exits the shell
- * @tokenizedCommand: tokenized command 
+ * @tokenizedCommand: tokenized command
  *
  * Return: void
  */
@@ -11,6 +11,7 @@
 void quit_function(char **tokenizedCommand)
 {
 	int numTokens = 0, arg;
+
 	for (; tokenizedCommand[numTokens] != NULL; numTokens++)
 		;
 	if (numTokens == 1)
@@ -45,7 +46,7 @@ void quit_function(char **tokenizedCommand)
 
 /**
  *env_function - prints the current_environnement
- *@tokenized_command: tokenized command 
+ *@tokenized_command: tokenized command
  *
  *Return: void
  */

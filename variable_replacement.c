@@ -2,7 +2,8 @@
 
 /**
  * replace_vars - does just that
- * @commmand: pointer to the command given
+ *
+ * @command: pointer to the command given
  *
  * Return: always 0
  */
@@ -25,5 +26,5 @@ int replace_vars(char *command)
 		snprintf(position, 6, "%d", getpid());
 	}
 
-	return 0;
+	return (0);
 }

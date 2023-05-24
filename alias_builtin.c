@@ -3,7 +3,7 @@
 /**
  * print_all_aliases - prints a list of all aliases
  */
-void print_all_aliases()
+void print_all_aliases(void)
 {
 	int i;
 
@@ -44,6 +44,7 @@ void print_aliases(char **aliases, int tally)
 void define_aliases(char **names, char **vals, int tally)
 {
 	int i = 0;
+
 	while (i < tally)
 	{
 		set_env(names[i], vals[i]);

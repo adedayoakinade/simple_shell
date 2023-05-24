@@ -1,7 +1,8 @@
 #include "shell.h"
 
 /**
- * cd - changes the cwd to a specified directory
+ * change_directory - changes the cwd to a specified directory
+ * @path: character to a pointer
  *
  * Return: nothing
  */

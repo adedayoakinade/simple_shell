@@ -1,13 +1,14 @@
 #include "shell.h"
 
-/* 
+/*
  * set_env - Initialises a new environment variable,
- * 	     or modifies an existing one.
+ * or modifies an existing one.
+ *
+ * @value: value of the variable
+ * @variable: pointer to the variable
  *
  * Return: 0 if success, -1 otherwise
- */
-
-int set_env(const char *variable, const char *value)
+ */int set_env(const char *variable, const char *value)
 {
 	pid_t pid;
 	int var_len = strlen(variable);
@@ -18,7 +19,7 @@ int set_env(const char *variable, const char *value)
 	if (command == NULL)
 	{
 		perror("ERROR: Sorry! Failed to allocate memory\n");
-		return -1;
+		return (-1);
 	}
 
 	snprintf(command, com_len + 1, "set_env %s %s", variable, value);
@@ -35,7 +36,7 @@ int set_env(const char *variable, const char *value)
 	if (pid == 0)
 	{
 		char *args[MAX_ARGS];
-	       
+
 		args[0] = "/bin/sh";
 		args[1] = "-c";
 		args[2] = command;
@@ -44,11 +45,12 @@ int set_env(const char *variable, const char *value)
 		execve(args[0], args, NULL);
 
 		perror("ERROR: Sorry! Command execution failed\n");
-		exit(1);	
+		exit(1);
 	}
 	else
 	{
 		int status;
+
 		waitpid(pid, &status, 0);
 
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
@@ -60,7 +62,7 @@ int set_env(const char *variable, const char *value)
 		{
 			fprintf(stderr, "ERROR: Sorry! Failed to set environment variable\n");
 			free(command);
-			return -1;
+			return (-1);
 		}
 
 	}
@@ -69,10 +71,11 @@ int set_env(const char *variable, const char *value)
 
 /*
  * unset_env - deletes an environment variable
+ * @variable: pointer to variable
  *
  * Return: void
- */
-void unset_env(const char *variable)
+ *
+ */void unset_env(const char *variable)
 {
 	int i, res;
 	size_t com_len = strlen("unset_env") + strlen(variable + 1);
@@ -96,7 +99,8 @@ void unset_env(const char *variable)
 
 	if (res != 0)
 	{
-		fprintf(stderr, "ERROR: Sorry! Failed to unset environment variable: %s\n", variable);
+		fprintf(stderr, "ERROR:
+		Sorry! Failed to unset environment variable: %s\n", variable);
 	}
 
 	free(command);

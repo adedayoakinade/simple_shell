@@ -13,11 +13,12 @@
 #include <signal.h>
 
 
-/* constants for the specific command type
- * 		 EXT_CMD - commands e.g. /bin/ls
- *		 INT_CMD - commands e.g. exit, env
- *		 PATH_CMD - commands in the PATH
- *		 INVALID_CMD - invalid commands
+/**
+ * constants for the specific command type
+ *	EXT_CMD - commands e.g. /bin/ls
+ *	INT_CMD - commands e.g. exit, env
+ *	PATH_CMD - commands in the PATH
+ *	INVALID_CMD - invalid commands
  */
 #define INVALID_CMD -1
 #define EXT_CMD 1
@@ -36,12 +37,11 @@
 
 
 /**
- *struct map - a struct that maps a command name to a function 
+ * struct map - a struct that maps a command name to a function
  *
- *@commandName: name of the command
- *@function: the function that executes the command
+ * @commandName: name of the command
+ * @function: the function that executes the command
  */
-
 typedef struct map
 {
 	char *commandName;
@@ -80,7 +80,6 @@ void ctrlCHandler(int);
 void change_directory(const char *path);
 extern void initializeCommand(char **current_command, int type_command);
 extern void nonInteractiveMode(void);
-void parse_command(char *command, char *args[])
 
 
 /*Strings*/

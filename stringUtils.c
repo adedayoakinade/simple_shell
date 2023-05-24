@@ -35,7 +35,8 @@ char *_strcat(char *destString, char *srcString)
 	int destStringLen = _strlen(destString);
 	int srcStringLen = _strlen(srcString);
 
-	jointString = malloc(sizeof(*jointString) * (destStringLen + srcStringLen + 1));
+	jointString = malloc(sizeof(*jointString) *
+	(destStringLen + srcStringLen + 1));
 	_strcpy(destString, jointString);
 	_strcpy(srcString, jointString + destStringLen);
 	jointString[destStringLen + srcStringLen] = '\0';

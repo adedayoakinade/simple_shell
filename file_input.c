@@ -17,7 +17,7 @@ void file_command(char *command)
 	else if (pid == 0)
 	{
 		char *args[MAX_ARGS];
-		
+
 		args[0] = "bin/sh";
 		args[1] = (char *)command;
 		args[3] = NULL;
@@ -35,7 +35,7 @@ void file_command(char *command)
 		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 		{
 			fprintf(stderr, "Command '%s' exited with non-zero status\n", command);
-			
+
 		}
 	}
 }

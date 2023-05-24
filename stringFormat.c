@@ -30,6 +30,7 @@ void removeNewline(char *str)
 void removeComment(char *inputString)
 {
 	int index = 0;
+
 	if (inputString[index] == '#')
 		inputString[index] = '\0';
 	while (inputString[index] != '\0')
