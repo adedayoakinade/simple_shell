@@ -1,56 +1,47 @@
 #include "shell.h"
 
 /**
- * home_dir - finds the home directory
- *
- * Return: pointer to the home directory
- *
- */
-char *home_dir()
-{
-	return getenv("HOME");
-}
-
-/**
- * cd - chnages directories
+ * cd - changes the cwd to a specified directory
  *
  * Return: nothing
  */
-void change_directory(char *args[])
+void change_directory(const char *path)
 {
-	char *home_directory = home_dir();
-	char *targ_dir = args[1];
-	char *current_dir = getenv("PWD");
+	char *argv[3];
+	char buf[MAX_INPUT_SIZE];
+	char *envp[] = {NULL};
 
-	if (targ_dir == NULL)
+	if (strcmp(path, "-") == 0)
 	{
-		targ_dir = home_directory;
-	}
-	else if (strcmp(targ_dir, "-") == 0)
-	{
-		targ_dir = getenv("OLDPWD");
+		char *prev_pwd = getenv("OLDPWD");
 
-		if (targ_dir == NULL)
+		if (prev_pwd == NULL)
 		{
 			fprintf(stderr, "Sorry! Previous directory not set\n");
 			return;
 		}
 
-		printf("%s\n", targ_dir);
+		printf("%s\n", prev_pwd);
+		path = prev_pwd;
 	}
 
-	if (chdir(targ_dir) != 0)
+	if (chdir(path) != 0)
 	{
-		fprintf(stderr, "Sorry! Failed to change directories\n");
+		perror("chdir");
 		return;
 	}
 
-	if (getcwd(current_dir, MAX_INPUT_SIZE) != NULL)
-	{
-		setenv("PWD", current_dir, 1);
-	}
-	else
-	{
-		fprintf(stderr, "Sorry! Faile to get current directory\n");
-	}
+	getcwd(buf, sizeof(buf));
+		set_env("OLDPWD", getenv("PWD"));
+		set_env("PWD", buf);
+
+		argv[0] = "cd";
+		argv[1] = (char *)path;
+		argv[2] = NULL;
+
+		if (execve("bin/cd", argv, envp) == -1)
+		{
+			perror("execve");
+			return;
+		}
 }

@@ -1,80 +1,77 @@
 #include "shell.h"
 
 /**
- * logic_commands - executes logical commands
+ * execute_command - does just that
  *
- * Return: void
+ * Return: -1 if failure
  */
-void logic_commands(char *command)
+int execute_command()
 {
-	char* token_and = strstr(command, "&&");
-	char *args[MAX_ARGS];
+	int status;
+	pid_t pid = fork();
 
-
-	if (token_and != NULL)
+	if (pid == -1)
 	{
-		int status;
-		char *first_command = strtok(command, "&&");
-		char *second_command = strtok(NULL, "&&");
-		pid_t pid = fork();
-
-
-		if (pid == 0)
-		{
-			int i;
-			char *tokenised = strtok(first_command, " ");
-			char *args[MAX_ARGS];
-
-			for (i = 0; i < MAX_ARGS - 1; i++)
-			{
-				if (tokenised != NULL)
-				{
-					args[i] = tokenised;
-					tokenised = strtok(NULL, " ");
-				}
-			}
-
-			args[i] = NULL;
-
-			execve(args[0], args, environ);
-			printf("Sorry! Command not found: %s\n", args[0]);
-			exit(EXIT_FAILURE);
-		}
-		else if (pid < 0)
-		{
-			printf("Sorry! Fork failed");
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
-			wait(&status);
-
-			if (status == 0)
-			{
-				return;
-			}
-		}
-
-		if (second_command != NULL)
-		{
-			logic_commands(second_command);
-		}
-		return;
-
+		perror("fork");
+		exit(EXIT_FAILURE);
 	}
 
-	parseCommand(command);
+	if (pid == 0)
+	{
+		char *args[] = {"bin/sh", "-c", NULL};
+		execve("bin/sh", args, NULL);
+		exit(EXIT_FAILURE);
+	}	
+	else waitpid(pid, &status, 0);
 
-	if (strcmp(args[0], "exit") == 0)
-		exit(0);
-	else if (strcmp(args[0], "setenv") == 0)
-		set_env(args);
-	else if (strcmp(args[0], "unsetenv") == 0)
-		unset_env(args);
-	else if (strcmp(args[0], "cd") == 0)
-		change_directory(args);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
 	else
-		executeCommand(args, 1);
-
+		return (-1);
 
 }
+
+
+/**
+ * logic_commands - executes logical commands
+ *
+ * Return: -1
+ */
+int logic_operation(char *command)
+{
+	int res;
+	char *first_command = strtok(command, "&|");
+	char *second_command = strtok(NULL, "&|");
+	char *operation = strtok(NULL, "&|");
+
+
+	if (first_command == NULL || operation == NULL || second_command == NULL)
+	{
+		printf("ERROR: Invalid command format!\n");
+		return (-1);
+	}
+
+	res = execute_command(first_command);
+
+
+	if (strcmp(operation, "||") == 0)
+	{
+		if (res != 0)
+			res = execute_command(second_command);
+		
+	}
+	else if (strcmp(operation, "&&") == 0)
+	{
+	
+		if (res == 0)
+			res = execute_command(second_command);
+	}
+	else
+	{
+		printf("ERROR: Invalid operator: %s\n", operation);
+		return (-1);
+	}
+
+	return (res);
+}
+

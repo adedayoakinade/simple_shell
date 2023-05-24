@@ -47,6 +47,7 @@ int main(int argc __attribute__((unused)), char **argv)
 			initializeCommand(currentCmd, commandType);
 			free(currentCmd);
 		}
+		
 		free(commands);
 	}
 	free(cmdLine);

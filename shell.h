@@ -48,6 +48,20 @@ typedef struct map
 	void (*function)(char **command);
 } mapFunction;
 
+/**
+ * struct Alias - a struct that maps an alias command
+ *
+ * @name : name of the command
+ * @val : what the command contains
+ */
+
+typedef struct
+{
+	char *name;
+	char *val;
+}
+Alias;
+
 extern char **environ;
 extern char *cmdLine;
 extern char **commands;
@@ -63,7 +77,7 @@ char **tokenize(char *, char *);
 void executeCommand(char **, int);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void ctrlCHandler(int);
-void change_directory(char *args[]);
+void change_directory(const char *path);
 extern void initializeCommand(char **current_command, int type_command);
 extern void nonInteractiveMode(void);
 
@@ -85,8 +99,8 @@ void _strcpy(char *, char *);
 /*Builtin*/
 void quit_function(char **);
 void env_function(char **);
-void set_env(char *args[]);
-void unset_env(char *args[]);
+int set_env(const char *variable, const char *value);
+void unset_env(const char *variable);
 
 #endif /*SHELL_H*/
 
