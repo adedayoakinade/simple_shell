@@ -109,8 +109,8 @@ void (*getFunction(char *command))(char **)
 {
 	int index;
 	mapFunction mapping[] = {
-		{"env", env_function}, {"exit", quit_function}};
-	for (index = 0; index < 2; index++)
+		{"env", env_function}, {"exit", quit_function}, {"setenv", set_env}, {"unsetenv", unset_env}};
+	for (index = 0; index < 4; index++)
 	{
 		if (_strcmp(command, mapping[index].commandName) == 0)
 			return (mapping[index].function);
