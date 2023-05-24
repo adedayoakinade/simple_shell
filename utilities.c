@@ -1,5 +1,6 @@
 #include "shell.h"
 
+<<<<<<< HEAD
 /**
  * parseCommand - decrypt the command given to the system
  * @command: command to be decrypted
@@ -74,6 +75,8 @@ void executeCommand(char **tokenizedCommand, int commandType)
 		exitStatus = 127;
 	}
 }
+=======
+>>>>>>> a705384a81fee17722573688176be3e30b5f37e6
 
 /**
  * checkPath - checks if a command is found in the PATH
@@ -112,24 +115,7 @@ char *checkPath(char *command)
 	return (NULL);
 }
 
-/**
- * getFunction - retrieves a function based on the command given
- * @command: command required to retrieve its function
- *
- * Return: pointer to the proper function, or null on fail
- */
-void (*getFunction(char *command))(char **)
-{
-	int index;
-	mapFunction mapping[] = {
-		{"env", env_function}, {"exit", quit_function}};
-	for (index = 0; index < 2; index++)
-	{
-		if (_strcmp(command, mapping[index].commandName) == 0)
-			return (mapping[index].function);
-	}
-	return (NULL);
-}
+
 
 /**
  * getEnvironmentVariable - gets the value of an environment variable
@@ -157,6 +143,7 @@ char *getEnvironmentVariable(char *name)
 	return (NULL);
 }
 
+<<<<<<< HEAD
 /**
  * initializeCommand - starts executing all commands
  * @currentCommand: verify current command
@@ -215,6 +202,8 @@ char **tokenize(char *inputString, char *delimiter)
 
 	return (resultArray);
 }
+=======
+>>>>>>> a705384a81fee17722573688176be3e30b5f37e6
 
 /**
  * _realloc - implements the realloc function in C
