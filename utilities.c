@@ -1,82 +1,5 @@
 #include "shell.h"
 
-<<<<<<< HEAD
-/**
- * parseCommand - decrypt the command given to the system
- * @command: command to be decrypted
- *
- * Return: constant representing the type of the command
- */
-int parseCommand(char *command)
-{
-	int index;
-	char *internalCommands[] = {"env", "exit", NULL};
-	char *commandPath = NULL;
-
-	for (index = 0; command[index] != '\0'; index++)
-	{
-		if (command[index] == '/')
-			return (EXT_CMD);
-	}
-	for (index = 0; internalCommands[index] != NULL; index++)
-	{
-		if (_strcmp(command, internalCommands[index]) == 0)
-			return (INT_CMD);
-	}
-	/* @checkPath - checks if a command is found in the PATH */
-	commandPath = checkPath(command);
-	if (commandPath != NULL)
-	{
-		free(commandPath);
-		return (PATH_CMD);
-	}
-
-	return (INVALID_CMD);
-}
-
-/**
- * executeCommand - executes a command
- * @tokenizedCommand: tokenized form of the command)
- * @commandType: type of the command
- *
- * Return: void
- */
-void executeCommand(char **tokenizedCommand, int commandType)
-{
-	void (*function)(char **command);
-
-	if (commandType == EXT_CMD)
-	{
-		if (execve(tokenizedCommand[0], tokenizedCommand, NULL) == -1)
-		{
-			perror(getEnvironmentVariable("PWD"));
-			exit(2);
-		}
-	}
-	if (commandType == PATH_CMD)
-	{
-		if (execve(checkPath(tokenizedCommand[0]), tokenizedCommand, NULL) == -1)
-		{
-			perror(getEnvironmentVariable("PWD"));
-			exit(2);
-		}
-	}
-	if (commandType == INT_CMD)
-	{
-		function = getFunction(tokenizedCommand[0]);
-		function(tokenizedCommand);
-	}
-	if (commandType == INVALID_CMD)
-	{
-		print(shellName, STDERR_FILENO);
-		print(": 1: ", STDERR_FILENO);
-		print(tokenizedCommand[0], STDERR_FILENO);
-		print(": not found\n", STDERR_FILENO);
-		exitStatus = 127;
-	}
-}
-=======
->>>>>>> a705384a81fee17722573688176be3e30b5f37e6
 
 /**
  * checkPath - checks if a command is found in the PATH
@@ -84,13 +7,13 @@ void executeCommand(char **tokenizedCommand, int commandType)
  *
  * Return: path where the command is found in, NULL if not found
  */
+
 char *checkPath(char *command)
 {
 	char **pathArray = NULL;
 	char *tempString, *tempString2, *pathCopy;
 	char *path = getEnvironmentVariable("PATH");
 	int index;
-
 	if (path == NULL || _strlen(path) == 0)
 		return (NULL);
 	pathCopy = malloc(sizeof(*pathCopy) * (_strlen(path) + 1));
@@ -128,7 +51,6 @@ char *getEnvironmentVariable(char *name)
 	char **environment;
 	char *pairPointer;
 	char *nameCopy;
-
 	for (environment = environ; *environment != NULL; environment++)
 	{
 		for (pairPointer = *environment, nameCopy = name;
@@ -143,73 +65,12 @@ char *getEnvironmentVariable(char *name)
 	return (NULL);
 }
 
-<<<<<<< HEAD
-/**
- * initializeCommand - starts executing all commands
- * @currentCommand: verify current command
- * @commandType: type of the current command
- *
- * Return: void function
- */
-void initializeCommand(char **currentCommand, int commandType)
-{
-	pid_t pid;
-
-	if (commandType == EXT_CMD || commandType == PATH_CMD)
-	{
-		pid = fork();
-		if (pid == 0)
-			executeCommand(currentCommand, commandType);
-		else
-		{
-			waitpid(pid, &exitStatus, 0);
-			exitStatus >>= 8;
-		}
-	}
-	else
-		executeCommand(currentCommand, commandType);
-}
-
-/**
- * tokenize - tokenizes the input string
- * @inputString: input to be tokenized
- *@delimiter: delimiter to be used for tokenization
- *
- *Return: tokens array
- */
-
-char **tokenize(char *inputString, char *delimiter)
-{
-	int numDelimiters = 0;
-	char **resultArray = NULL;
-	char *token = NULL;
-	char *savePointer = NULL;
-
-	token = _strtok_r(inputString, delimiter, &savePointer);
-
-	while (token != NULL)
-	{
-		resultArray = _realloc(resultArray, sizeof(*resultArray)
-		* numDelimiters, sizeof(*resultArray) * (numDelimiters + 1));
-		resultArray[numDelimiters] = token;
-		token = _strtok_r(NULL, delimiter, &savePointer);
-		numDelimiters++;
-	}
-
-	resultArray = _realloc(resultArray, sizeof(*resultArray)
-	* numDelimiters, sizeof(*resultArray) * (numDelimiters + 1));
-	resultArray[numDelimiters] = NULL;
-
-	return (resultArray);
-}
-=======
->>>>>>> a705384a81fee17722573688176be3e30b5f37e6
 
 /**
  * _realloc - implements the realloc function in C
  * @ptr: pointer to the previously allocated memory
- * @oldSize: size of ptr
- * @newSize: size of the new memory to be allocated
+ * @old_size: size of ptr
+ * @new_size: size of the new memory to be allocated
  *
  * Return: pointer to the address of the new memory block
  */
@@ -217,7 +78,6 @@ void *_realloc(void *ptr, unsigned int oldSize, unsigned int newSize)
 {
 	void *tempBlock;
 	unsigned int index;
-
 	if (ptr == NULL)
 	{
 		tempBlock = malloc(newSize);
@@ -268,7 +128,6 @@ void nonInteractiveMode(void)
 	char **currentCommand = NULL;
 	int index, commandType = 0;
 	size_t bufferSize = 0;
-
 	if (!(isatty(STDIN_FILENO)))
 	{
 		while (getline(&cmdLine, &bufferSize, stdin) != -1)
