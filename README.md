@@ -1,6 +1,6 @@
 # 0x16. C - Simple Shell
 
-> Our team in the ALX SE training, collaborated on a Simple Shell project. 
+> For the first sprint's final project in ALX SE training Cohort 13(0223), our team collaborated on a Simple Shell project. 
 The task was to develop a basic shell program that imitates the Bash shell, which is called **hsh**.
 
 ## Learning Materials
